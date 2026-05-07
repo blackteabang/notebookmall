@@ -4,13 +4,21 @@ import RefurbishedPolicy from '../components/RefurbishedPolicy';
 import { ArrowRight, ShieldCheck, Lock, Info } from 'lucide-react';
 import { useProducts } from '../context/ProductContext';
 
+// --- [메인 홈페이지 컴포넌트] ---
+// 사용자가 처음 방문하는 쇼핑몰 메인 화면입니다. 
+// B2B 폐쇄몰 형태이므로, 올바른 코드를 입력해야만 상품 목록을 볼 수 있습니다.
 const Home = () => {
   const { products } = useProducts();
   const navigate = useNavigate();
+  
+  // discountCode: 사용자가 입력한 인가 코드 (세일즈 코디네이터 코드 등)
+  // isUnlocked: 올바른 코드를 입력하여 폐쇄몰 화면이 해제되었는지 여부
   const [discountCode, setDiscountCode] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
 
+  // 사용자가 '입장하기' 버튼을 눌렀을 때 실행되는 함수
   const handleUnlock = () => {
+    // 임시 로직: 4자리 이상 입력 시 통과 (실제 서비스 시 서버 검증 필요)
     if (discountCode.trim().length >= 4) {
       setIsUnlocked(true);
     } else {
@@ -81,6 +89,9 @@ const Home = () => {
               >
                 VERIFY & ENTER
               </button>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '-0.5rem' }}>
+                (임시 코드로 "1234" 입력)
+              </p>
             </div>
             
             <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
@@ -111,7 +122,7 @@ const Home = () => {
               gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', 
               gap: '1rem'
             }}>
-              {products.map(laptop => (
+              {products.filter(laptop => !laptop.status || laptop.status === '판매중').map(laptop => (
                 <div 
                   key={laptop.id} 
                   className="formal-card" 
@@ -155,41 +166,29 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Formal Header Section - MOVED TO MIDDLE */}
+        {/* Formal Header Section - Optimized for Mobile */}
         <section style={{ 
           padding: '4rem 0', 
           background: '#fff',
           borderBottom: '1px solid var(--border)',
-          textAlign: 'left'
+          textAlign: 'center'
         }}>
-          <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', gap: '3rem' }}>
-            <div>
-              <div className="closed-mall-badge" style={{ marginBottom: '1rem', display: 'inline-block' }}>
-                REMAN B2B CHANNEL
-              </div>
-              <h1 style={{ fontSize: '3rem', fontWeight: 900, lineHeight: 1.1, marginBottom: '1rem', letterSpacing: '-0.03em' }}>
-                PROFESSIONAL <br />
-                REFURBISHED <br />
-                SUPPLY
-              </h1>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: '2rem', maxWidth: '500px' }}>
-                리맨은 기업 및 리셀러를 위한 최적화된 리퍼비시 노트북 공급망을 제공합니다. 
-                모든 제품은 전문 엔지니어의 엄격한 검수를 거쳐 파트너사에 공급됩니다.
-              </p>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <button className="btn-premium" style={{ padding: '0.6rem 1.2rem', fontSize: '0.8rem' }}>Check Stock</button>
-                <button className="btn-secondary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.8rem' }}>Partner Application</button>
-              </div>
+          <div className="container" style={{ maxWidth: '800px' }}>
+            <div className="closed-mall-badge" style={{ marginBottom: '1.5rem', display: 'inline-block' }}>
+              REMAN B2B CHANNEL
             </div>
-            <div style={{ padding: '2rem', background: '#f8fafc', border: '1px solid var(--border)', textAlign: 'center' }}>
-              <ShieldCheck size={80} color="var(--primary)" style={{ opacity: 0.1, marginBottom: '0.5rem' }} />
-              <h3 style={{ fontWeight: 800, fontSize: '1.2rem' }}>CERTIFIED B2B PARTNER</h3>
-              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>AUTHORIZED DISTRIBUTION HUB</p>
-              <div style={{ marginTop: '1.5rem', fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'left', padding: '1rem', borderTop: '1px solid var(--border)' }}>
-                • 글로벌 품질 표준 준수<br/>
-                • 대량 주문 특별 단가 제공<br/>
-                • 파트너 전용 기술 지원
-              </div>
+            <h1 style={{ fontSize: 'min(3rem, 10vw)', fontWeight: 900, lineHeight: 1.1, marginBottom: '1.5rem', letterSpacing: '-0.03em' }}>
+              PROFESSIONAL <br />
+              REFURBISHED <br />
+              SUPPLY
+            </h1>
+            <p style={{ fontSize: '1rem', color: 'var(--text-muted)', marginBottom: '2.5rem', marginInline: 'auto', maxWidth: '600px' }}>
+              리맨은 기업 및 리셀러를 위한 최적화된 리퍼비시 노트북 공급망을 제공합니다. 
+              모든 제품은 전문 엔지니어의 엄격한 검수를 거쳐 파트너사에 공급됩니다.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button className="btn-premium" style={{ padding: '0.8rem 1.5rem' }}>Check Stock</button>
+              <button className="btn-secondary" style={{ padding: '0.8rem 1.5rem' }}>Partner Application</button>
             </div>
           </div>
         </section>

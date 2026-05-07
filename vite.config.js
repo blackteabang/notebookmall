@@ -6,6 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5000,
+    allowedHosts: [
+      'refurlatop.refurbish.co.kr',
+      'renew.refurbish.co.kr'
+    ],
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:5001',

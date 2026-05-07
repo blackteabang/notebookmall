@@ -5,21 +5,29 @@ import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import QABoard from './pages/QABoard';
 import Checkout from './pages/Checkout';
+import OrderComplete from './pages/OrderComplete';
 import AdminDashboard from './pages/AdminDashboard';
 import { ProductProvider } from './context/ProductContext';
+import { CartProvider } from './context/CartContext';
+import { OrderProvider } from './context/OrderContext';
+import CartSidebar from './components/CartSidebar';
 
 function App() {
   return (
     <ProductProvider>
-      <Router>
-      <div className="app">
-        <Navbar />
-        <main>
+      <CartProvider>
+        <OrderProvider>
+          <Router>
+          <div className="app">
+            <Navbar />
+            <CartSidebar />
+            <main>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/qa" element={<QABoard />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order-complete" element={<OrderComplete />} />
             <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </main>
@@ -45,6 +53,8 @@ function App() {
         </footer>
       </div>
       </Router>
+      </OrderProvider>
+      </CartProvider>
     </ProductProvider>
   );
 }

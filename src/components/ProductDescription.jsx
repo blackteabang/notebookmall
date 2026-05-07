@@ -5,6 +5,16 @@ const ProductDescription = ({ product }) => {
 
   return (
     <div style={{ marginTop: '5rem', borderTop: '1px solid var(--border)', paddingTop: '5rem' }}>
+      {product.manufacturerLink && (
+        <div style={{ marginBottom: '3rem', padding: '1.5rem 2rem', background: '#f8f9fa', borderRadius: '16px', border: '1px solid var(--border)', textAlign: 'center' }}>
+          <a href={product.manufacturerLink} target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline', fontWeight: 700, display: 'block', marginBottom: '0.8rem', wordBreak: 'break-all', fontSize: '1.1rem' }}>
+            {product.manufacturerLink}
+          </a>
+          <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)' }}>
+            본제품의 상세 설명은 제조사의 웹사이트를 통해 확인해주시기 바랍니다.
+          </p>
+        </div>
+      )}
       {/* Marketing Section */}
       {product.marketingDesc ? (
         <div style={{ textAlign: 'center', marginBottom: '5rem', fontSize: '1.2rem', color: '#444', lineHeight: '1.8' }} className="ql-editor">

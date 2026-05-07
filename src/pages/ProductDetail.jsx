@@ -4,11 +4,13 @@ import { ShieldCheck, Truck, RotateCcw, Star, ChevronRight, CheckCircle2, X } fr
 import ProductQA from '../components/ProductQA';
 import ProductDescription from '../components/ProductDescription';
 import { useProducts } from '../context/ProductContext';
+import { useCart } from '../context/CartContext';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { products } = useProducts();
   const [showPolicyModal, setShowPolicyModal] = useState(false);
+  const { addToCart } = useCart();
 
   const product = products.find(p => String(p.id) === String(id));
 
@@ -45,13 +47,6 @@ const ProductDetail = () => {
           <div className="glass" style={{ padding: '2.5rem', borderRadius: '32px', height: 'fit-content', background: '#fff', maxWidth: '100%' }}>
             <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1rem' }}>{product.name}</h1>
             <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>{product.specs}</p>
-            {product.manufacturerLink && (
-              <p style={{ fontSize: '0.85rem', marginBottom: '1rem' }}>
-                <a href={product.manufacturerLink} target="_blank" rel="noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline', fontWeight: 600 }}>
-                  * 제품상세사양은 제조사 페이지에서 확인하세요.
-                </a>
-              </p>
-            )}
             
             <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div style={{ fontSize: '0.85rem', color: '#099268', fontWeight: 800, background: '#e6fcf5', padding: '4px 10px', borderRadius: '6px', border: '1px solid #b2f2bb' }}>
@@ -88,10 +83,14 @@ const ProductDetail = () => {
             </div>
 
             <div className="product-actions">
-              <button className="btn-premium" style={{ flex: 1, justifyContent: 'center', padding: '1.2rem', fontSize: '1.1rem' }}>
+              <button 
+                onClick={() => addToCart(product)}
+                className="btn-premium" 
+                style={{ flex: 1, justifyContent: 'center', padding: '1.2rem', fontSize: '1.1rem' }}
+              >
                 장바구니 담기
               </button>
-              <Link to="/checkout" className="btn-secondary" style={{ flex: 1, justifyContent: 'center', padding: '1.2rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center' }}>
+              <Link to="/checkout" state={{ product }} className="btn-secondary" style={{ flex: 1, justifyContent: 'center', padding: '1.2rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center' }}>
                 바로 구매하기
               </Link>
             </div>
