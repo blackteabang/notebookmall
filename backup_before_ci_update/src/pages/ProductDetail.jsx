@@ -49,7 +49,7 @@ const ProductDetail = () => {
             <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>{product.specs}</p>
             
             <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div style={{ fontSize: '0.85rem', color: 'var(--primary)', fontWeight: 800, background: '#f0fdf4', padding: '4px 10px', borderRadius: '6px', border: '1px solid #b2f2bb' }}>
+              <div style={{ fontSize: '0.85rem', color: '#099268', fontWeight: 800, background: '#e6fcf5', padding: '4px 10px', borderRadius: '6px', border: '1px solid #b2f2bb' }}>
                 가용 재고: {product.stock || 0} / {product.initialStock || product.stock || 0}
               </div>
             </div>

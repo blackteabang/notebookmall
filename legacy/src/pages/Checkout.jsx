@@ -213,7 +213,7 @@ const Checkout = () => {
               </div>
               
               {!isCodeApplied && actualDiscount > 0 && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--primary)', fontSize: '0.9rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#099268', fontSize: '0.9rem' }}>
                   <span>코디네이터 할인가능 금액</span>
                   <span>- ₩ {actualDiscount.toLocaleString()}</span>
                 </div>
@@ -265,7 +265,7 @@ const Checkout = () => {
                 )}
                 {isCodeApplied && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
-                    <div style={{ background: '#f0fdf4', color: 'var(--primary)', padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600 }}>
+                    <div style={{ background: '#e6fcf5', color: '#099268', padding: '0.3rem 0.6rem', borderRadius: '4px', fontSize: '0.85rem', fontWeight: 600 }}>
                       ✓ 할인 적용 완료
                     </div>
                   </div>

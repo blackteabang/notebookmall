@@ -44,8 +44,18 @@ const Navbar = () => {
     }}>
       <div className="container navbar-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-            <img src="/logo.png" alt="REMANn RefurNote" style={{ height: '52px', width: 'auto' }} />
+          <Link to="/" style={{ display: 'flex', flexDirection: 'column', lineHeight: 1, textDecoration: 'none' }}>
+            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.03em' }}>REMAN</div>
+            <div style={{ 
+              fontWeight: 700, 
+              fontSize: '0.6rem', 
+              color: 'var(--primary)', 
+              border: '1px solid var(--primary)', 
+              padding: '1px 3px', 
+              alignSelf: 'flex-start',
+              marginTop: '1px',
+              letterSpacing: '0.05em'
+            }}>B2B SUPPLY</div>
           </Link>
           <div className="closed-mall-badge hide-mobile" style={{ fontSize: '0.65rem' }}>
             AUTHORIZED ACCESS ONLY
@@ -80,16 +90,8 @@ const Navbar = () => {
           <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
             <Link to="/qa" className="hide-mobile" style={{ fontWeight: 700, fontSize: '0.8rem', textTransform: 'uppercase' }}>Technical Support</Link>
             
-            <Link to="/admin" className="btn-secondary hide-mobile" style={{ 
-              fontSize: '0.7rem', 
-              padding: '0.4rem 0.6rem', 
-              textAlign: 'center', 
-              lineHeight: '1.2', 
-              fontWeight: 800,
-              minWidth: '65px',
-              whiteSpace: 'nowrap'
-            }}>
-              관리자<br/>메뉴
+            <Link to="/admin" className="btn-secondary hide-mobile" style={{ fontSize: '0.75rem', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Shield size={14} /> 관리자 메뉴
             </Link>
             
             <button className="btn-premium" style={{ fontSize: '0.75rem', padding: '0.5rem 1rem' }}>
@@ -185,9 +187,8 @@ const Navbar = () => {
                 <Code size={18} /> Technical Support
               </Link>
               
-              <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: 800, fontSize: '0.9rem', display: 'flex', flexDirection: 'column', lineHeight: '1.2' }}>
-                <span>관리자</span>
-                <span>메뉴</span>
+              <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
+                <Shield size={18} /> 관리자 메뉴
               </Link>
 
               <div 

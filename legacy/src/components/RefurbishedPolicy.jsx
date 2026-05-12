@@ -26,32 +26,21 @@ const RefurbishedPolicy = () => {
   ];
 
   return (
-    <section className="policy-section" style={{ padding: '5rem 0', background: 'var(--card-bg)' }}>
+    <section style={{ padding: '5rem 0', background: 'var(--card-bg)' }}>
       <div className="container">
-        <h2 className="policy-title" style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem' }}>리맨의 약속</h2>
-        <div className="policy-grid">
+        <h2 style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem' }}>리맨의 약속</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem' }}>
           {policies.map((p, i) => (
-            <div key={i} className="policy-card glass">
-              <div className="policy-icon">
+            <div key={i} className="glass" style={{ padding: '2rem', borderRadius: '24px', textAlign: 'center', background: '#fff' }}>
+              <div style={{ color: 'var(--secondary)', marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>
                 {p.icon}
               </div>
-              <h3>{p.title}</h3>
-              <p>{p.desc}</p>
+              <h3 style={{ marginBottom: '1rem' }}>{p.title}</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{p.desc}</p>
             </div>
           ))}
         </div>
       </div>
-      <style>{`
-        @media (max-width: 768px) {
-          .policy-section {
-            padding: 3rem 0 !important;
-          }
-          .policy-title {
-            font-size: 1.75rem !important;
-            margin-bottom: 2rem !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };

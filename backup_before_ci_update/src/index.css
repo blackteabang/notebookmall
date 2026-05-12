@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --primary: #57AE31; /* Remann Green */
-  --secondary: #0097D8; /* Remann Blue */
-  --accent: #696464; /* Remann Gray (Replacing Orange for more formal look) */
-  --muted-gray: #696464; /* Remann Gray */
+  --primary: #1e293b; /* Formal Slate Blue/Grey */
+  --secondary: #0f172a; /* Deeper Slate */
+  --accent: #2563eb; /* Trustworthy Blue */
   --bg: #ffffff;
   --text: #0f172a;
   --text-muted: #64748b;
   --card-bg: #ffffff;
   --border: #cbd5e1;
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow: none; /* Formal style often avoids shadows */
   --glass: rgba(255, 255, 255, 0.95);
   --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -111,7 +110,7 @@ button {
 }
 
 .btn-secondary:hover {
-  background: #f0fdf4; /* Very light green on hover */
+  background: #f8fafc;
 }
 
 .product-detail-grid {
@@ -145,7 +144,7 @@ button {
 
 /* Specialized Closed Mall UI Components */
 .closed-mall-badge {
-  background: var(--accent); /* Remann Orange for exclusivity/action */
+  background: #ef4444; /* Warning/Exclusivity Red */
   color: #fff;
   padding: 0.25rem 0.75rem;
   font-size: 0.75rem;

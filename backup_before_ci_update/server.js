@@ -82,19 +82,6 @@ async function initDB() {
       )
     `);
 
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS partner_inquiries (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        phone VARCHAR(50) NOT NULL,
-        title VARCHAR(255),
-        message TEXT NOT NULL,
-        date DATETIME DEFAULT CURRENT_TIMESTAMP,
-        status VARCHAR(50) DEFAULT '신규'
-      )
-    `);
-
     // 4. 초기 더미 데이터 삽입 (Seeding)
     // 개발 편의를 위해 테이블이 비어있을 경우에만 초기 상품 데이터를 자동으로 넣어줍니다.
     const [rows] = await pool.query('SELECT COUNT(*) as count FROM products');
@@ -289,51 +276,6 @@ app.put('/api/orders/:id/status', async (req, res) => {
     const { status } = req.body;
     await pool.query('UPDATE orders SET status=? WHERE id=?', [status, id]);
     res.json({ id, status });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// --- Partner Inquiries(파트너 신청) API Routes ---
-
-app.get('/api/partners', async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT * FROM partner_inquiries ORDER BY date DESC');
-    res.json(rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.post('/api/partners', async (req, res) => {
-  try {
-    const { name, email, phone, title, message } = req.body;
-    const [result] = await pool.query(
-      'INSERT INTO partner_inquiries (name, email, phone, title, message) VALUES (?, ?, ?, ?, ?)',
-      [name, email, phone, title, message]
-    );
-    res.json({ id: result.insertId, name, email, phone, title, message, status: '신규' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.put('/api/partners/:id/status', async (req, res) => {
-  try {
-    const id = req.params.id;
-    const { status } = req.body;
-    await pool.query('UPDATE partner_inquiries SET status=? WHERE id=?', [status, id]);
-    res.json({ id, status });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.delete('/api/partners/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-    await pool.query('DELETE FROM partner_inquiries WHERE id=?', [id]);
-    res.json({ message: 'Partner inquiry deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

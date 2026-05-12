@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Laptop, Users, Award, Plus, Search, Filter, MoreVertical, Edit, Trash2, Shield, ArrowLeft, ShoppingCart, Handshake } from 'lucide-react';
+import React, { useState } from 'react';
+import { LayoutDashboard, Laptop, Users, Award, Plus, Search, Filter, MoreVertical, Edit, Trash2, Shield, ArrowLeft, ShoppingCart } from 'lucide-react';
 import { useProducts } from '../context/ProductContext';
 import { useOrders } from '../context/OrderContext';
 import { Editor, EditorProvider, Toolbar } from 'react-simple-wysiwyg';
@@ -19,7 +19,6 @@ const AdminDashboard = () => {
     { id: 'orders', label: '상품 판매 내역', icon: <ShoppingCart size={20} /> },
     { id: 'users', label: '회원 정보 관리', icon: <Users size={20} /> },
     { id: 'coordinators', label: '코디네이터 관리', icon: <Award size={20} /> },
-    { id: 'partners', label: '파트너 신청 현황', icon: <Handshake size={20} /> },
   ];
 
   return (
@@ -31,9 +30,10 @@ const AdminDashboard = () => {
         borderRight: '1px solid var(--border)',
         padding: '2rem 1rem'
       }}>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <img src="/logo.png" alt="REMANn RefurNote" style={{ height: '40px', width: 'auto' }} />
-          </div>
+        <div style={{ marginBottom: '3rem', padding: '0 1rem' }}>
+          <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary)' }}>Admin Console</h2>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>리맨 마켓 관리자 센터</p>
+        </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
           {menuItems.map(item => (
@@ -73,7 +73,6 @@ const AdminDashboard = () => {
             {activeTab === 'orders' && <OrderManagement />}
             {activeTab === 'users' && <UserManagement />}
             {activeTab === 'coordinators' && <CoordinatorManagement />}
-            {activeTab === 'partners' && <PartnerManagement />}
           </>
         )}
         {activeTab === 'dashboard' && <DashboardOverview />}
@@ -104,7 +103,7 @@ const DashboardOverview = () => {
   const recentOrders = [...orders].reverse().slice(0, 5);
 
   const rankColors = {
-    Gold: { bg: '#f1f3f5', text: '#696464', bar: '#696464' },
+    Gold: { bg: '#fff9e6', text: '#e67700', bar: '#f59f00' },
     Silver: { bg: '#f1f3f5', text: '#495057', bar: '#868e96' },
     Bronze: { bg: '#fff4f2', text: '#c0392b', bar: '#d9480f' },
   };
@@ -125,7 +124,7 @@ const DashboardOverview = () => {
         {[
           { label: '총 주문 건수', value: `${totalOrders}건`, sub: `오늘 ${todayOrders.length}건`, icon: '🛒', color: '#e7f5ff', accent: '#1971c2' },
           { label: '누적 총 매출', value: `₩ ${(totalRevenue / 10000).toFixed(0)}만`, sub: `${totalOrders > 0 ? Math.round(totalRevenue / totalOrders).toLocaleString() : 0}원 / 건 평균`, icon: '💰', color: '#ebfbee', accent: '#2f9e44' },
-          { label: '코디네이터 수', value: `${coordinators.length}명`, sub: `활성 ${coordStats.filter(c => c.count > 0).length}명 실적 보유`, icon: '🏆', color: '#f1f3f5', accent: '#696464' },
+          { label: '코디네이터 수', value: `${coordinators.length}명`, sub: `활성 ${coordStats.filter(c => c.count > 0).length}명 실적 보유`, icon: '🏆', color: '#fff9e6', accent: '#e67700' },
         ].map((card, i) => (
           <div key={i} className="glass" style={{ background: '#fff', borderRadius: '20px', padding: '1.8rem 2rem', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -160,7 +159,7 @@ const DashboardOverview = () => {
                 <div key={c.id}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem' }}>
-                      <span style={{ fontWeight: 800, fontSize: '1rem', color: idx === 0 ? '#696464' : idx === 1 ? '#868e96' : '#aaa', minWidth: '1.2rem' }}>
+                      <span style={{ fontWeight: 800, fontSize: '1rem', color: idx === 0 ? '#f59f00' : idx === 1 ? '#868e96' : '#aaa', minWidth: '1.2rem' }}>
                         {idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉'}
                       </span>
                       <div>
@@ -219,7 +218,7 @@ const DashboardOverview = () => {
               const normStatus = ['처리전', '입금확인', '배송완료'].includes(order.status) ? order.status : (order.status === '결제완료' ? '입금확인' : '처리전');
               const statusStyle = {
                 '처리전': { bg: '#f1f3f5', text: '#495057' },
-                '입금확인': { bg: '#f1f3f5', text: '#696464' },
+                '입금확인': { bg: '#fff9e6', text: '#e67700' },
                 '배송완료': { bg: '#ebfbee', text: '#2f9e44' },
               }[normStatus] || { bg: '#f1f3f5', text: '#555' };
               const itemSummary = order.items?.map(i => i.name).join(', ') || '상품 정보 없음';
@@ -1161,11 +1160,11 @@ const OrderManagement = () => {
         </div>
       </div>
 
-      <div className="glass" style={{ background: '#fff', borderRadius: '24px', padding: '1rem', overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed', minWidth: '1100px' }}>
+      <div className="glass" style={{ background: '#fff', borderRadius: '24px', padding: '1rem' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'left', background: '#f8f9fa' }}>
-              <th style={{ padding: '1.5rem', width: '130px' }}>
+              <th style={{ padding: '1.5rem', width: '150px' }}>
                 <select
                   value={selectedStatusFilter}
                   onChange={e => setSelectedStatusFilter(e.target.value)}
@@ -1178,22 +1177,21 @@ const OrderManagement = () => {
                     background: '#fff',
                     fontWeight: 600,
                     color: '#495057',
-                    cursor: 'pointer',
-                    width: '100%'
+                    cursor: 'pointer'
                   }}
                 >
-                  <option value="">상태(전체)</option>
+                  <option value="">처리 상태 (전체)</option>
                   <option value="처리전">처리전</option>
                   <option value="입금확인">입금확인</option>
                   <option value="배송완료">배송완료</option>
                 </select>
               </th>
-              <th style={{ padding: '1.5rem', width: '180px' }}>주문일시/번호</th>
-              <th style={{ padding: '1.5rem', width: '160px' }}>주문자 정보</th>
-              <th style={{ padding: '1.5rem', width: '250px' }}>주문 상품</th>
-              <th style={{ padding: '1.5rem', width: '150px' }}>결제 / 수량</th>
-              <th style={{ padding: '1.5rem', width: '140px' }}>결제 금액</th>
-              <th style={{ padding: '1.5rem', width: '140px' }}>
+              <th style={{ padding: '1.5rem' }}>주문일시/번호</th>
+              <th style={{ padding: '1.5rem' }}>주문자 정보</th>
+              <th style={{ padding: '1.5rem' }}>주문 상품</th>
+              <th style={{ padding: '1.5rem' }}>결제/수량</th>
+              <th style={{ padding: '1.5rem' }}>결제 금액</th>
+              <th style={{ padding: '1.5rem', width: '150px' }}>
                 <select
                   value={selectedCode}
                   onChange={e => setSelectedCode(e.target.value)}
@@ -1206,11 +1204,10 @@ const OrderManagement = () => {
                     background: '#fff',
                     fontWeight: 600,
                     color: '#495057',
-                    cursor: 'pointer',
-                    width: '100%'
+                    cursor: 'pointer'
                   }}
                 >
-                  <option value="">코드(전체)</option>
+                  <option value="">코디네이터 (전체)</option>
                   {uniqueCodes.map(code => (
                     <option key={code} value={code}>{code}</option>
                   ))}
@@ -1305,123 +1302,4 @@ const OrderManagement = () => {
   );
 };
 
-
-const PartnerManagement = () => {
-  const [partners, setPartners] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchPartners = async () => {
-    try {
-      const response = await fetch('/api/partners');
-      const data = await response.json();
-      setPartners(data);
-    } catch (err) {
-      console.error('Fetch partners error:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPartners();
-  }, []);
-
-  const handleUpdateStatus = async (id, newStatus) => {
-    try {
-      await fetch(`/api/partners/${id}/status`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus })
-      });
-      fetchPartners();
-    } catch (err) {
-      console.error('Update status error:', err);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) return;
-    try {
-      await fetch(`/api/partners/${id}`, { method: 'DELETE' });
-      fetchPartners();
-    } catch (err) {
-      console.error('Delete error:', err);
-    }
-  };
-
-  if (loading) return <div style={{ padding: '2rem', textAlign: 'center' }}>데이터를 불러오는 중...</div>;
-
-  return (
-    <div>
-      <h2 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '2.5rem' }}>파트너 신청 현황</h2>
-      <div className="glass" style={{ background: '#fff', borderRadius: '24px', padding: '1rem', overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'left' }}>
-              <th style={{ padding: '1.5rem', width: '150px' }}>신청일</th>
-              <th style={{ padding: '1.5rem', width: '120px' }}>이름</th>
-              <th style={{ padding: '1.5rem' }}>연락처 / 이메일</th>
-              <th style={{ padding: '1.5rem' }}>문의 내용</th>
-              <th style={{ padding: '1.5rem', width: '120px' }}>상태</th>
-              <th style={{ padding: '1.5rem', width: '150px' }}>관리</th>
-            </tr>
-          </thead>
-          <tbody>
-            {partners.map(p => (
-              <tr key={p.id} style={{ borderBottom: '1px solid #f8f9fa' }}>
-                <td style={{ padding: '1.5rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                  {new Date(p.date).toLocaleDateString()}
-                </td>
-                <td style={{ padding: '1.5rem', fontWeight: 700 }}>{p.name}</td>
-                <td style={{ padding: '1.5rem' }}>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>{p.phone}</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{p.email}</div>
-                </td>
-                <td style={{ padding: '1.5rem' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.3rem' }}>{p.title || '제목 없음'}</div>
-                  <div style={{ fontSize: '0.85rem', color: '#555', lineHeight: 1.5 }}>{p.message}</div>
-                </td>
-                <td style={{ padding: '1.5rem' }}>
-                  <select 
-                    value={p.status} 
-                    onChange={(e) => handleUpdateStatus(p.id, e.target.value)}
-                    style={{
-                      padding: '0.4rem 0.6rem',
-                      borderRadius: '6px',
-                      border: '1px solid var(--border)',
-                      fontSize: '0.85rem',
-                      background: p.status === '신규' ? '#fff5f5' : p.status === '처리완료' ? '#ebfbee' : '#f1f3f5',
-                      color: p.status === '신규' ? '#fa5252' : p.status === '처리완료' ? '#2f9e44' : '#495057',
-                      fontWeight: 700
-                    }}
-                  >
-                    <option value="신규">신규</option>
-                    <option value="상담중">상담중</option>
-                    <option value="처리완료">처리완료</option>
-                    <option value="거절">거절</option>
-                  </select>
-                </td>
-                <td style={{ padding: '1.5rem' }}>
-                  <button 
-                    onClick={() => handleDelete(p.id)}
-                    style={{ border: 'none', background: 'none', color: '#fa5252', cursor: 'pointer', padding: '0.5rem' }}
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {partners.length === 0 && (
-              <tr>
-                <td colSpan="6" style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>신청된 파트너 내역이 없습니다.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-};
-
 export default AdminDashboard;
-

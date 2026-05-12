@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RefurbishedPolicy from '../components/RefurbishedPolicy';
-import PartnerApplyModal from '../components/PartnerApplyModal';
-import StockStatusModal from '../components/StockStatusModal';
 import { ArrowRight, ShieldCheck, Lock, Info } from 'lucide-react';
 import { useProducts } from '../context/ProductContext';
 
@@ -17,8 +15,6 @@ const Home = () => {
   // isUnlocked: 올바른 코드를 입력하여 폐쇄몰 화면이 해제되었는지 여부
   const [discountCode, setDiscountCode] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
-  const [isStockModalOpen, setIsStockModalOpen] = useState(false);
 
   // 사용자가 '입장하기' 버튼을 눌렀을 때 실행되는 함수
   const handleUnlock = () => {
@@ -32,8 +28,6 @@ const Home = () => {
 
   return (
     <>
-      <PartnerApplyModal isOpen={isPartnerModalOpen} onClose={() => setIsPartnerModalOpen(false)} />
-      <StockStatusModal isOpen={isStockModalOpen} onClose={() => setIsStockModalOpen(false)} />
       {/* Verification Modal Overlay */}
       {!isUnlocked && (
         <div style={{ 
@@ -42,7 +36,7 @@ const Home = () => {
           left: 0, 
           right: 0,
           bottom: 0,
-          background: 'rgba(10, 47, 73, 0.95)', /* Darker Remann Blue for formal feel */
+          background: 'rgba(15, 23, 42, 0.9)', 
           display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center', 
@@ -101,10 +95,7 @@ const Home = () => {
             </div>
             
             <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              <p>코드가 없으신가요? <span 
-                onClick={() => setIsPartnerModalOpen(true)}
-                style={{ textDecoration: 'underline', cursor: 'pointer', color: 'var(--primary)', fontWeight: 600 }}
-              >파트너십 신청하기</span></p>
+              <p>코드가 없으신가요? <span style={{ textDecoration: 'underline', cursor: 'pointer', color: 'var(--primary)', fontWeight: 600 }}>파트너십 신청하기</span></p>
             </div>
           </div>
         </div>
@@ -196,9 +187,7 @@ const Home = () => {
               모든 제품은 전문 엔지니어의 엄격한 검수를 거쳐 파트너사에 공급됩니다.
             </p>
             <div className="home-hero-buttons">
-              <button 
-                onClick={() => setIsStockModalOpen(true)}
-                className="btn-premium" style={{ 
+              <button className="btn-premium" style={{ 
                 display: 'flex',
                 flexDirection: 'column', 
                 alignItems: 'center',
@@ -211,9 +200,7 @@ const Home = () => {
                 <span style={{ fontSize: '0.9rem', fontWeight: 800, letterSpacing: '0.05em' }}>CHECK STOCK</span>
                 <span style={{ fontSize: '0.75rem', fontWeight: 500, opacity: 0.9 }}>재고확인</span>
               </button>
-              <button 
-                onClick={() => setIsPartnerModalOpen(true)}
-                className="btn-secondary" style={{ 
+              <button className="btn-secondary" style={{ 
                 display: 'flex',
                 flexDirection: 'column', 
                 alignItems: 'center',
@@ -231,25 +218,25 @@ const Home = () => {
         </section>
 
         {/* Quality Standard Section */}
-        <section style={{ background: '#E6EAF8', color: 'var(--text)', padding: '4rem 0' }}>
+        <section style={{ background: 'var(--primary)', color: '#fff', padding: '4rem 0' }}>
           <div className="container" style={{ textAlign: 'center' }}>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 900, marginBottom: '1rem' }}>REMAN QUALITY STANDARD</h2>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '700px', margin: '0 auto 3rem', fontSize: '0.9rem' }}>
+            <p style={{ opacity: 0.8, maxWidth: '700px', margin: '0 auto 3rem', fontSize: '0.9rem' }}>
               모든 리맨 리퍼비시 노트북은 미국 및 유럽 기준의 품질 인증 프로세스를 준수합니다. 
               비즈니스 파트너십을 통해 합리적인 가격으로 프리미엄 제품을 공급받으세요.
             </p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
-              <div style={{ border: '1px solid var(--border)', background: '#fff', padding: '1.5rem' }}>
-                <h4 style={{ fontWeight: 800, marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--primary)' }}>GRADE A+</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>신품급 외관 및 성능 보장</p>
+              <div style={{ border: '1px solid rgba(255,255,255,0.2)', padding: '1.5rem' }}>
+                <h4 style={{ fontWeight: 800, marginBottom: '0.5rem', fontSize: '0.9rem' }}>GRADE A+</h4>
+                <p style={{ fontSize: '0.75rem', opacity: 0.7 }}>신품급 외관 및 성능 보장</p>
               </div>
-              <div style={{ border: '1px solid var(--border)', background: '#fff', padding: '1.5rem' }}>
-                <h4 style={{ fontWeight: 800, marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--primary)' }}>1 YEAR WARRANTY</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>안심 보증 및 사후 서비스</p>
+              <div style={{ border: '1px solid rgba(255,255,255,0.2)', padding: '1.5rem' }}>
+                <h4 style={{ fontWeight: 800, marginBottom: '0.5rem', fontSize: '0.9rem' }}>1 YEAR WARRANTY</h4>
+                <p style={{ fontSize: '0.75rem', opacity: 0.7 }}>안심 보증 및 사후 서비스</p>
               </div>
-              <div style={{ border: '1px solid var(--border)', background: '#fff', padding: '1.5rem' }}>
-                <h4 style={{ fontWeight: 800, marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--primary)' }}>BULK SUPPLY</h4>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>파트너 전용 대량 단가 적용</p>
+              <div style={{ border: '1px solid rgba(255,255,255,0.2)', padding: '1.5rem' }}>
+                <h4 style={{ fontWeight: 800, marginBottom: '0.5rem', fontSize: '0.9rem' }}>BULK SUPPLY</h4>
+                <p style={{ fontSize: '0.75rem', opacity: 0.7 }}>파트너 전용 대량 단가 적용</p>
               </div>
             </div>
           </div>
